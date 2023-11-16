@@ -1,12 +1,12 @@
 var mysql = require('mysql');
 
+//XAMPP
 var con = mysql.createConnection({
     host: "localhost",
     user: "root",
     password: "",
     database: "test"
 });
-
 
 con.connect(function(err) {
     if (err) throw err;
