@@ -1,5 +1,5 @@
 const mysql = require("mysql");
-const pool = mysql.createPool({
+var pool = mysql.createPool({
     connectionLimit: 10,
     host: "example.org",
     user: "bob",
@@ -46,3 +46,36 @@ pool.on("release", function (connection) {
 pool.end(function (err) {
     // all connections in the pool have ended
 })
+
+const poolCluster = mysql.createPoolCluster();
+
+poolCluster.add(config);
+poolCluster.add("MASTER", masterConfig);
+poolCluster.add("SLAVE1", slave1Config);
+poolCluster.add("SLAVE2", slave2Config);
+
+poolCluster.remove("SLAVE2");
+poolCluster.remove("SLAVE*");
+
+poolCluster.getConnection(function (err, connection) {});
+
+poolCluster.getConnection("MASTER", function (err, connection) {});
+
+poolCluster.on("remove", function (nodeId) {
+    console.log("REMOVE NODE : " + nodeId);
+});
+
+poolCluster.getConnection("SLAVE*", "ORDER", function (err, connection) {});
+
+poolCluster.getConnection(/SLAVE[12]/, function(err, connection) {});
+
+poolCluster.of("*").getConnection(function (err, connection) {});
+
+var pool = poolCluster.of("SLAVE*", "RANDOM");
+pool.getConnection(function (err, connection) {});
+pool.getConnection(function (err, connection) {});
+pool.query(function (error, results, fields) {});
+
+poolCluster.end(function (err) {
+
+});
