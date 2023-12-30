@@ -1,4 +1,5 @@
 var mysql = require('mysql');
+const transaction = require("./transaction.js");
 
 //XAMPP
 var con = mysql.createConnection({
@@ -13,6 +14,7 @@ con.connect(function(err) {
     console.log("Connected!");
 });
 
+/*
 //C
 var sql = "INSERT INTO customers (name, address) VALUES ('Company Inc', 'Highway 37')";
 con.query(sql, function (err) {
@@ -40,7 +42,16 @@ con.query(sql, function (err, result) {
     if (err) throw err;
     console.log("Number of records deleted: " + result.affectedRows);
 });
+*/
 
-con.end();
+const postTitle = "So What";
+const body = "Testing MySQL transaction via nodejs";
+const billTitle = "My Third Bill";
+const amount = 11.11;
+const paid = true;
+
+transaction(con);
+
+//con.end();
 
 //Source: https://www.w3schools.com/nodejs/nodejs_mysql.asp
