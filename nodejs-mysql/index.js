@@ -1,5 +1,6 @@
 var mysql = require('mysql');
 const transaction = require("./transaction.js");
+const ping = require("./ping.js")
 
 //XAMPP
 var con = mysql.createConnection({
@@ -44,13 +45,8 @@ con.query(sql, function (err, result) {
 });
 */
 
-const postTitle = "So What";
-const body = "Testing MySQL transaction via nodejs";
-const billTitle = "My Third Bill";
-const amount = 11.11;
-const paid = true;
-
 transaction(con);
+ping(con);
 
 //con.end();
 
